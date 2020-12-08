@@ -17,14 +17,14 @@ help: ## This help.
 
 create-cluster: ## Create eks cluster
 	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
-		/bin/bash -c "./scripts/create-cluster.sh | bash"
+		bash ./scripts/create-cluster.sh
 
 install-certmanager: ## Install cert-manager on cluster
 	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
-		/bin/bash -c "./scripts/cert-manager.sh | bash"
+		bash ./scripts/cert-manager.sh
 
 install-kubernetes-crd: ## Configure autoscaler, clusterIssuer, LB, calico, metricsserver, coredns, chronyd
 	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
-		/bin/bash -c "./scripts/install-k8-files.sh | bash"
+		bash ./scripts/install-k8-files.sh
 
 all: create-cluster install-certmanager install-kubernetes-crd

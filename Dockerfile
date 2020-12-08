@@ -18,5 +18,3 @@ RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/
 
 RUN apt-get update && \
   apt-get install -y kubectl
-
-ENTRYPOINT [“/bin/bash"]
