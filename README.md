@@ -5,7 +5,7 @@ Create cluster EKS using [kustomize](https://kustomize.io/) to create environmen
 ## Configurar
 
 Edit the files:
-  - `.env` (dont commit this file) from example: `.env.example`;
+  - `.env` (don't commit this file) from example: `.env.example`;
   - `./overlays/dev/eks/eks.yaml`: configs from cluster;
 
 ## Executar
