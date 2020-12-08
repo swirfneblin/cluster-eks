@@ -1,0 +1,6 @@
+bases:
+  - ../../../base/eks
+
+nameSuffix: "-dev"
+patchesStrategicMerge:
+  - eks.yaml
