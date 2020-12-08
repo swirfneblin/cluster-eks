@@ -3,7 +3,7 @@ ifneq (,$(wildcard ./.env))
     export
 		ENV_FILE_PARAM = --env-file .env
 endif
-IMG_DOCKER=swirfneblin/eks-agent
+IMG_REGISTRY=swirfneblin/eks-agent
 
 # HELP
 # This will output the help for each task
@@ -16,15 +16,22 @@ help: ## This help.
 .DEFAULT_GOAL := help
 
 create-cluster: ## Create eks cluster
-	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
+	  podman run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_REGISTRY) \
 		bash ./scripts/create-cluster.sh
 
 install-certmanager: ## Install cert-manager on cluster
-	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
+	  podman run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_REGISTRY) \
 		bash ./scripts/cert-manager.sh
 
 install-kubernetes-crd: ## Configure autoscaler, clusterIssuer, LB, calico, metricsserver, coredns, chronyd
-	  docker run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_DOCKER) \
+	  podman run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_REGISTRY) \
 		bash ./scripts/install-k8-files.sh
+
+check_destroy:
+		@echo -n "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]
+
+destroy: check_destroy ## Erase cluster
+		podman run --rm -v $(PWD):/app -w /app/ --network host --privileged $(ENV_FILE_PARAM) $(IMG_REGISTRY) \
+		bash ./scripts/destroy.sh
 
 all: create-cluster install-certmanager install-kubernetes-crd
