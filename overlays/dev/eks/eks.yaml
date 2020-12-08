@@ -1,0 +1,20 @@
+apiVersion: "eksctl.io/v1alpha5"
+kind: ClusterConfig
+
+metadata:
+  name: cluster-eks
+
+managedNodeGroups:
+  - name: spot
+    spot: true
+    minSize: 1
+    maxSize: 2
+    volumeSize: 8
+    instanceType: t2.micro
+    labels:
+      region-az: ng-sa-east-1
+      instance-type: t2.micro
+    ssh:
+      publicKeyName: fedora
+    tags:
+      Environment: "DEV"
