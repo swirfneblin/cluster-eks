@@ -13,4 +13,4 @@ Edit the files:
   2. Install cert-manager on cluster from [helm](https://helm.sh/);
   3. Configure the following features on kubernetes cluster (autoscaling, elb, coredns, calico,  metricsServer, vpa);
 
-Execute `make all` or `make help` to more options.
+Execute `make all` or `make help` for more options.
